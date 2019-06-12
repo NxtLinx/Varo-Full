@@ -2,7 +2,8 @@ package gamemanager;
 
 public enum  GameState {
 
-    WAITING("Wait")
+    SETUP("Setup")
+    ,WAITING("Wait")
     ,SCHUTZ("Save")
     ,FIGHT("Fight")
     ,STOPING("End");

@@ -5,7 +5,6 @@ import gamemanager.GameState;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class MySQLManager {
 
@@ -13,9 +12,12 @@ public class MySQLManager {
 
     public static GameState getMySQlGame(){
 
-        GameState gameState = GameState.WAITING;
+        GameState gameState = GameState.SETUP;
         if (gamestateIsAktiv()) {
                 switch (getGame()){
+                    case "Setup":
+                        gameState = GameState.SETUP;
+                        break;
                     case "Wait":
                        gameState = GameState.WAITING;
                         break;
@@ -40,6 +42,9 @@ public class MySQLManager {
     public static void setNextState(){
         if (gamestateIsAktiv()) {
             switch (getGame()){
+                case "Setup":
+                    setGameState(GameState.WAITING);
+                    break;
                 case "Wait":
                    setGameState(GameState.SCHUTZ);
                     break;
@@ -85,7 +90,7 @@ public class MySQLManager {
 
     public static void setGameState(GameState gameState){
         if (gamestateIsAktiv()) {
-            mySQL.update("UPDATE anmelden SET password = '"+gameState.getName()+"';");
+            mySQL.update("UPDATE gamemanager SET gamestate = '"+gameState.getName()+"';");
         }
     }
 
